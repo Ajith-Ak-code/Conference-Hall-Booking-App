@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Dashboard</h2>
+
+<form method="POST" action="{{ url_for('book') }}">
+    <select name="hall_name" required>
+        <option value="">Select a hall</option>
+        <option value="Hall A">Ramalakshmi Mahal A/C Hall</option>
+        <option value="Hall B">Subhashree Hall</option>
+        <option value="Hall C">Brookefields Banquet Halls</option>
+    </select>
+    <input type="datetime-local" name="booking_date" required>
+    <button type="submit">Book Hall</button>
+</form>
+
+<h3>Your Bookings:</h3>
+<ul>
+    {% for booking in bookings %}
+        <li>{{ booking.hall_name }} - {{ booking.booking_date.strftime('%Y-%m-%d %H:%M') }} 
+            <form method="POST" action="{{ url_for('delete', booking_id=booking.id) }}" style="display:inline;">
+                <button type="submit">Delete</button>
+            </form>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
